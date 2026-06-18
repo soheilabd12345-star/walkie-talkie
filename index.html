@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="بیسیم">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    <title>بیسیم P2P</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="screen active">
+        <div class="splash-content">
+            <div class="splash-icon">📻</div>
+            <h1>بیسیم SOLO</h1>
+            <p>ارتباط مستقیم</p>
+            <div class="loading-dots">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen">
+        <div class="login-container">
+            <div class="logo-animated">📻</div>
+            <h1>بیسیم SOLO</h1>
+            <p class="subtitle"> ارتباط مستقیم و امن </p>
+            
+            <div class="form-card">
+                <div class="input-group">
+                    <label>نام شما</label>
+                    <input type="text" id="username" placeholder="نام خود را وارد کنید..." maxlength="15" autocomplete="off">
+                </div>
+                
+                <button id="create-room-btn" class="btn-primary" disabled>
+                    🎤 ایجاد اتاق جدید
+                </button>
+                
+                <div class="divider"><span>یا</span></div>
+                
+                <div class="input-group">
+                    <label>کد دعوت</label>
+                    <div class="invite-input-wrapper">
+                        <input type="text" id="invite-code" placeholder="کد ۶ رقمی را وارد کنید..." maxlength="6" autocomplete="off">
+                        <button id="paste-btn" class="btn-icon-sm">📋</button>
+                    </div>
+                </div>
+                
+                <button id="join-room-btn" class="btn-secondary" disabled>
+                    🔗 پیوستن به اتاق
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Walkie Talkie Screen -->
+    <div id="walkie-screen" class="screen">
+        <div class="app-shell">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="room-info">
+                    <span class="room-label">اتاق:</span>
+                    <span class="room-code" id="room-code-display">------</span>
+                </div>
+                <div class="header-actions">
+                    <button id="share-btn" class="btn-icon" title="اشتراک‌گذاری">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                        </svg>
+                    </button>
+                    <button id="leave-btn" class="btn-icon" title="خروج">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                            <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Connection Status -->
+            <div class="connection-bar" id="connection-bar">
+                <span class="conn-dot" id="conn-dot"></span>
+                <span id="conn-text">در حال اتصال...</span>
+                <span class="peer-count" id="peer-count">0 همتا</span>
+            </div>
+
+            <!-- Messages Area -->
+            <main class="messages-area" id="messages-area">
+                <div class="empty-chat">
+                    <div class="empty-icon">🎙️</div>
+                    <h3>آماده مکالمه</h3>
+                    <p>دکمه را نگه دارید و صحبت کنید</p>
+                    <div class="tips">
+                        <div class="tip">🔗 کد اتاق را برای دوستان بفرستید</div>
+                        <div class="tip">🎤 Push-to-Talk (نگه دارید و صحبت کنید)</div>
+                        <div class="tip">🔒 ارتباط مستقیم و رمزنگاری شده</div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Active Peers -->
+            <div class="peers-bar" id="peers-bar">
+                <div class="peers-scroll" id="peers-list"></div>
+            </div>
+
+            <!-- PTT Button Area -->
+            <footer class="ptt-area">
+                <div class="ptt-container">
+                    <button id="ptt-btn" class="ptt-button">
+                        <div class="ptt-ripple"></div>
+                        <svg class="mic-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            <line x1="12" y1="19" x2="12" y2="23"/>
+                            <line x1="8" y1="23" x2="16" y2="23"/>
+                        </svg>
+                    </button>
+                    <div class="ptt-hint" id="ptt-hint">نگه دارید و صحبت کنید</div>
+                    <div class="recording-timer" id="rec-timer">00:00</div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Install Prompt -->
+    <div id="install-prompt" class="install-prompt">
+        <div class="install-content">
+            <span>📱</span>
+            <div>
+                <strong>نصب برنامه</strong>
+                <small>برای دسترسی سریع‌تر نصب کنید</small>
+            </div>
+            <button id="install-btn" class="btn-sm">نصب</button>
+            <button id="dismiss-install" class="btn-icon-sm">✕</button>
+        </div>
+    </div>
+
+    <script src="js/lib/simplepeer.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
